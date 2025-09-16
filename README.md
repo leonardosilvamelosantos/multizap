@@ -11,6 +11,7 @@ Sistema Multi-Tenant para WhatsApp com dashboard moderno e funcional.
 - 💬 **Envio de Mensagens** - Interface integrada para envio
 - 🧪 **Teste Rápido** - Modal especializado para testes
 - 📱 **QR Code Automático** - Geração e exibição de QR codes
+- 🤖 **Bot Automático** - Resposta automática com gatilho `!bot`
 
 ## 🚀 Como Usar
 
@@ -85,6 +86,27 @@ multizap-unified/
 2. Digite apenas o número: `11999999999`
 3. Use a mensagem automática ou personalize
 4. Clique em "Enviar Teste"
+
+## 🤖 Bot Automático
+
+O MultiZap inclui um bot simples que responde automaticamente a mensagens:
+
+### Como Usar o Bot
+
+1. **Conecte uma instância** no dashboard
+2. **Envie a mensagem** `!bot` para qualquer número
+3. **Receba a resposta automática**: "Olá mundo! 👋 Sou o bot do MultiZap e estou funcionando perfeitamente!"
+
+### Gatilhos Disponíveis
+
+- `!bot` - Resposta automática "Olá mundo!"
+
+### Funcionamento
+
+- ✅ **Detecção automática** de mensagens recebidas
+- ✅ **Resposta instantânea** quando detecta o gatilho
+- ✅ **Funciona em todas as instâncias** conectadas
+- ✅ **Logs detalhados** no console do servidor
 
 ## ⚙️ Configurações
 

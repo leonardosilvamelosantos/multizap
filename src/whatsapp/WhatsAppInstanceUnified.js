@@ -188,11 +188,14 @@ export class WhatsAppInstanceUnified extends EventEmitter {
       }
     });
 
-    this.sock.ev.on('messages.upsert', (m) => {
+    this.sock.ev.on('messages.upsert', async (m) => {
       try {
         this.lastActivity = new Date();
         this.emit('message', m);
         console.log(`📨 Nova mensagem recebida no tenant ${this.tenantId}`);
+        
+        // Processar gatilhos do bot
+        await this.processBotTriggers(m);
       } catch (error) {
         console.error(`❌ Erro no evento de mensagem do tenant ${this.tenantId}:`, error.message);
       }
@@ -370,6 +373,37 @@ export class WhatsAppInstanceUnified extends EventEmitter {
       }
     } catch (error) {
       console.error(`❌ Erro ao limpar dados do tenant ${this.tenantId}:`, error.message);
+    }
+  }
+
+  // Processar gatilhos do bot
+  async processBotTriggers(m) {
+    try {
+      if (!this.isConnected || !m.messages || m.messages.length === 0) {
+        return;
+      }
+
+      for (const message of m.messages) {
+        // Verificar se é uma mensagem de texto
+        if (!message.message || !message.message.conversation) {
+          continue;
+        }
+
+        const text = message.message.conversation.toLowerCase().trim();
+        const from = message.key.remoteJid;
+
+        // Verificar gatilho !bot
+        if (text === '!bot') {
+          console.log(`🤖 Gatilho !bot detectado no tenant ${this.tenantId} de ${from}`);
+          
+          // Enviar resposta automática
+          await this.sendMessage(from, 'Olá mundo! 👋\n\nSou o bot do MultiZap e estou funcionando perfeitamente!');
+          
+          console.log(`✅ Resposta do bot enviada para ${from} no tenant ${this.tenantId}`);
+        }
+      }
+    } catch (error) {
+      console.error(`❌ Erro ao processar gatilhos do bot no tenant ${this.tenantId}:`, error.message);
     }
   }
 }
