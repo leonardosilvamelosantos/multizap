@@ -21,8 +21,25 @@ npm install
 ```
 
 ### 2. Iniciar Aplicação
+
+**Opção 1 - Comando direto:**
 ```bash
 npm start
+```
+
+**Opção 2 - Script automático (Windows):**
+```bash
+start-server.bat
+```
+
+**⚠️ Se der erro de porta em uso:**
+```bash
+# Windows - Finalizar processo na porta 3000
+netstat -ano | findstr :3000
+taskkill /PID [PID_NUMBER] /F
+
+# Ou use o script automático
+stop-server.bat
 ```
 
 ### 3. Acessar Dashboard
@@ -122,6 +139,54 @@ O MultiZap inclui um bot simples que responde automaticamente a mensagens:
 - ✅ Reconexões desnecessárias
 - ✅ Conexões intermitentes
 - ✅ Interface não funcional
+
+## 🔧 Troubleshooting
+
+### Erro: Porta 3000 em uso
+
+**Sintoma:** `EADDRINUSE: address already in use :::3000`
+
+**Solução:**
+1. **Usar script automático:**
+   ```bash
+   stop-server.bat
+   start-server.bat
+   ```
+
+2. **Solução manual:**
+   ```bash
+   # Verificar qual processo está usando a porta
+   netstat -ano | findstr :3000
+   
+   # Finalizar o processo (substitua [PID] pelo número encontrado)
+   taskkill /PID [PID] /F
+   
+   # Iniciar novamente
+   npm start
+   ```
+
+3. **Usar porta diferente:**
+   ```bash
+   # Definir variável de ambiente
+   set PORT=3001
+   npm start
+   ```
+
+### Bot não responde
+
+**Verificações:**
+1. ✅ Instância está conectada (status verde)
+2. ✅ Mensagem enviada é exatamente `!bot`
+3. ✅ Verificar logs no console do servidor
+4. ✅ Testar com número diferente
+
+### Dashboard não carrega
+
+**Verificações:**
+1. ✅ Servidor está rodando na porta 3000
+2. ✅ Acessar URL correta: `http://localhost:3000/dashboard-unified.html`
+3. ✅ Verificar se não há firewall bloqueando
+4. ✅ Testar em navegador diferente
 
 ## 📄 Licença
 
